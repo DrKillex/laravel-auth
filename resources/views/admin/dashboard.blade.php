@@ -14,7 +14,7 @@
                     </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <a href="{{ Route('admin.records.index') }}">records(da rivedere)</a>
                 </div>
             </div>
         </div>
