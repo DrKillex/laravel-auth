@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <a href="{{ route('admin.records.create') }}">create</a>
         <table class="table">
             <thead>
                 <tr>
@@ -19,8 +20,8 @@
                         <td>{{ $record->completed == 0 ? '❌' : '✔' }}</td>
                         <td>
                             <ul class="list-unstyled d-flex gap-2">
-                                <li><a href="#">show</a></li>
-                                <li><a href="#">edit</a></li>
+                                <li><a href="{{ route('admin.records.show', $record) }}">show</a></li>
+                                <li><a href="{{ route('admin.records.edit', $record) }}">edit</a></li>
                                 <li>
                                     <form action="{{ route('admin.records.destroy', $record) }}" method="POST">
                                         @csrf

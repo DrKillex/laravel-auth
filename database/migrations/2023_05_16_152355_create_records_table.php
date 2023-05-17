@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 50);
+            $table->string('title', 50)->unique();
             $table->string('slug');
             $table->date('creation_date');
             $table->text('record_description');

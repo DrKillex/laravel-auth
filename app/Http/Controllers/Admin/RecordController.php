@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRecordRequest;
+use App\Http\Requests\UpdateRecordRequest;
 use App\Models\Record;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
 class RecordController extends Controller
 {
     /**
@@ -27,7 +29,7 @@ class RecordController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.records.create');
     }
 
     /**
@@ -36,9 +38,14 @@ class RecordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRecordRequest $request)
     {
-        //
+        $data = $request->validated();
+        $newRecord = new Record();
+        $newRecord->slug = Str::slug($data['title']);
+        $newRecord->fill($data);
+        $newRecord->save();
+        return redirect()->route('admin.records.show', $newRecord);
     }
 
     /**
@@ -47,9 +54,9 @@ class RecordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Record $record)
     {
-        //
+        return view('admin.records.show', compact('record'));
     }
 
     /**
@@ -58,9 +65,9 @@ class RecordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Record $record)
     {
-        //
+        return view('admin.records.edit', compact('record'));
     }
 
     /**
@@ -70,9 +77,12 @@ class RecordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRecordRequest $request, Record $record)
     {
-        //
+        $data = $request->validated();
+        $record->slug = Str::slug($data['title']);
+        $record->update($data);
+        return view('admin.records.show', compact('record'));
     }
 
     /**
