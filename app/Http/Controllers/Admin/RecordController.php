@@ -7,6 +7,7 @@ use App\Http\Requests\StoreRecordRequest;
 use App\Http\Requests\UpdateRecordRequest;
 use App\Models\Record;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 class RecordController extends Controller
 {
@@ -43,6 +44,9 @@ class RecordController extends Controller
         $data = $request->validated();
         $newRecord = new Record();
         $newRecord->slug = Str::slug($data['title']);
+        if (isset($data['image'])) {
+            $newRecord->image = Storage::put('uploads', $data['image']);
+        }
         $newRecord->fill($data);
         $newRecord->save();
         return redirect()->route('admin.records.show', $newRecord);
@@ -81,6 +85,19 @@ class RecordController extends Controller
     {
         $data = $request->validated();
         $record->slug = Str::slug($data['title']);
+        if(isset($data['delete_image'])){
+            if($record->image){
+                Storage::delete($record->image);
+                $record->image = null;
+            }
+        } else {
+            if (isset($data['image'])) {
+                if($record->image){
+                    Storage::delete($record->image);
+                }
+                $record->image = Storage::put('uploads', $data['image']);
+            }
+        }
         $record->update($data);
         return view('admin.records.show', compact('record'));
     }
@@ -94,6 +111,9 @@ class RecordController extends Controller
     public function destroy(Record $record)
     {
         $record->delete();
+        if($record->image){
+            Storage::delete($record->image);
+        }
         return to_route('admin.records.index');
     }
 }

@@ -47,7 +47,7 @@
                     <input class="form-control" type="file" id="image" name="image">
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="delete_image" name="delete_image">
+                    <input class="form-check-input" type="checkbox" role="switch" value="1" id="delete_image" name="delete_image">
                     <label class="form-check-label" for="delete_image">delete image</label>
                   </div>
                 <button type="submit" class="btn btn-primary">edit</button>

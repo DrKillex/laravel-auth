@@ -28,12 +28,14 @@ class UpdateRecordRequest extends FormRequest
             'title' => [
                 'required',
                 'max:50',
-                Rule::unique('records')->ignore($this->post),
+                Rule::unique('records')->ignore($this->record),
                 'string'
             ],
             'creation_date' => 'date|required',
             'record_description' => 'required',
             'completed' => 'required|boolean',
+            'image' => 'nullable|image|max:2048',
+            'delete_image' => 'boolean'
         ];
     }
 }

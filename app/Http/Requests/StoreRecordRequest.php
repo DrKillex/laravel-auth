@@ -28,6 +28,7 @@ class StoreRecordRequest extends FormRequest
             'creation_date' => 'date|required',
             'record_description' => 'required',
             'completed' => 'required|boolean',
+            'image' => 'nullable|image|max:2048'
         ];
     }
 }
