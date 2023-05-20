@@ -12,7 +12,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('admin.records.update', $record) }}" method="POST">
+            <form action="{{ route('admin.records.update', $record) }}" method="POST" enctype="multipart/form-data"  class="form-input-image">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
@@ -35,6 +35,21 @@
                         <option value="0" {{ old('completed', $record->completed) == '0' ? 'selected' : '' }}>no</option>
                     </select>
                 </div>
+
+                <div class="mb-3">
+
+                    <div class="preview">
+                        <img id="image-preview" @if($record->image) src="{{ asset('storage/' . $record->image) }}" @endif>
+                    </div>
+             
+        
+                    <label for="image" class="form-label">Image</label>
+                    <input class="form-control" type="file" id="image" name="image">
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="delete_image" name="delete_image">
+                    <label class="form-check-label" for="delete_image">delete image</label>
+                  </div>
                 <button type="submit" class="btn btn-primary">edit</button>
             </form>
         </div>

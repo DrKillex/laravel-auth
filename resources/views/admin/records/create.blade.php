@@ -11,7 +11,7 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('admin.records.store') }}" method="POST">
+        <form action="{{ route('admin.records.store') }}" method="POST" enctype="multipart/form-data"  class="form-input-image">
             @csrf
             <div class="mb-3">
                 <label for="title" class="form-label">title</label>
@@ -33,6 +33,13 @@
                     <option value="1" {{ old('completed') == '1' ? 'selected' : '' }}>yes</option>
                     <option value="0" {{ old('completed') == '0' ? 'selected' : '' }}>no</option>
                 </select>
+            </div>
+            <div class="mb-3">
+                <div class="preview">
+                    <img id="image-preview">
+                </div>
+                <label for="image" class="form-label">Image</label>
+                <input class="form-control" type="file" id="image" name="image">
             </div>
             <button type="submit" class="btn btn-primary">add</button>
         </form>
